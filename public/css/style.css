@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
 
 :root {
-	--dark-color-a: #667aff;
-	--dark-color-b: #7386ff;
+	--dark-color-a: #0e1621;
+	--dark-color-b: #17212b;
+	--message-box: #182533;
 	--light-color: #e6e9ff;
 	--success-color: #5cb85c;
 	--error-color: #d9534f;
@@ -38,6 +39,7 @@ a {
 	font-size: 17px;
 }
 
+
 /* Chat Page */
 
 .chat-container {
@@ -56,6 +58,7 @@ a {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	border-bottom: 4px solid #242f3d;
 }
 
 .chat-main {
@@ -72,47 +75,78 @@ a {
 
 .chat-sidebar h2 {
 	font-size: 20px;
-	background: rgba(0, 0, 0, 0.1);
+	background: #242f3d;
 	padding: 10px;
 	margin-bottom: 20px;
 }
 
 .chat-sidebar h3 {
 	margin-bottom: 15px;
+	font-size: 15px;
+	font-weight: normal;
 }
 
 .chat-sidebar ul li {
 	padding: 10px 0;
+	padding-left: 10px;
+	margin: 5px 0px;
+	background: #242f3d;
 }
 
 .chat-messages {
 	padding: 30px;
 	max-height: 500px;
 	overflow-y: scroll;
+	background: #0e1621;
 }
 
+.message-box {
+	display: flex;
+	align-items: center;
+}
+.avatar {
+	background: white;
+	width: 50px;
+	height: 50px;
+	position: relative;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: -7px 10px 0 0;
+}
+.avatar img{
+	/* background: red; */
+	width: 55px;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	position: absolute;
+
+}
 .chat-messages .message {
 	padding: 10px;
 	margin-bottom: 15px;
-	background-color: var(--light-color);
+	color: #fff;
+	background-color: var(--message-box);
 	border-radius: 5px;
 }
 
 .chat-messages .message .meta {
 	font-size: 15px;
 	font-weight: bold;
-	color: var(--dark-color-b);
-	opacity: 0.7;
+	color: #4fd5e8;
+	opacity: 1;
 	margin-bottom: 7px;
 }
 
 .chat-messages .message .meta span {
-	color: #777;
+	color: #6b7f8d;
+	margin-left: 10px;
 }
 
 .chat-form-container {
 	padding: 20px 30px;
 	background-color: var(--dark-color-a);
+	border-top: 4px solid #242f3d;
 }
 
 .chat-form-container form {
@@ -124,6 +158,14 @@ a {
 	padding: 5px;
 	height: 40px;
 	flex: 1;
+	background: #17212b;
+	color: #fff;
+	border: none;
+	
+}
+.chat-form-container input[type='text']:focus-visible {
+outline: none;
+background: #2f3740;
 }
 
 /* Join Page */

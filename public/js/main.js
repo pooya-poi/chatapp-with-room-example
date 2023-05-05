@@ -1,4 +1,3 @@
-
 const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
@@ -50,24 +49,55 @@ chatForm.addEventListener('submit', (e) => {
 function outputMessage(message) {
 	const div = document.createElement('div');
 
-	div.classList.add('message');
-	div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
-						<p class="text">	
-						${message.text}					
-						</p>`;
+	// div.classList.add('message');
+	div.classList.add('message-box');
+	// div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
+	// 					<p class="text">	
+	// 					${message.text}					
+	// 					</p>`;
+
+	if(message.username == 'ChatBot'){
+
+		div.innerHTML = `
+				<div class="avatar">
+				<img src="./image/chatbot.png" alt="">
+				</div>
+				<div class="message">
+				<p class="meta">${message.username}<span>${message.time}</span></p>
+				<p class="text">
+				${message.text}	
+				</p>
+				</div>
+			
+		`;
+	}else{
+		div.innerHTML = `
+				<div class="avatar" >
+			<img style="width:34px !important" src="./image/user.png" alt="">
+				</div>
+				<div class="message">
+				<p class="meta">${message.username}<span>${message.time}</span></p>
+				<p class="text">
+				${message.text}	
+				</p>
+				</div>
+			
+		`;
+
+	}
 
 	document.querySelector('.chat-messages').appendChild(div);
 }
 
 
 // output room name to DOM
-function outputRoomName(room){
-roomName.innerText = room;
+function outputRoomName(room) {
+	roomName.innerText = room;
 }
 
 // output users to DOM
-function outputUsers(users){
-userList.innerHTML = `
+function outputUsers(users) {
+	userList.innerHTML = `
 	${users.map(user => `<li>${user.username}</li>`).join('')}
 `;
 }
