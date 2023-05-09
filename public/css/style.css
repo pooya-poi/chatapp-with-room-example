@@ -229,3 +229,12 @@ background: #2f3740;
 		display: none;
 	}
 }
+
+
+.typing-indicator {
+	color: #fff;
+	font-weight: bold;
+	text-align: center;
+	background-color: #1d2834;
+	display: none;
+}

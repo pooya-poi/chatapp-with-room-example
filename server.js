@@ -41,7 +41,20 @@ io.on('connection', (socket) => {
 			room: user.room,
 			users: getRoomUsers(user.room)
 		});
+
+		
 	});
+	 // Listen for typing event
+	 socket.on('typing', () => {
+		const user = getCurrentUser(socket.id);
+		socket.broadcast.to(user.room).emit('istyping', { username: user.username, room: user.room });
+	  });
+	
+	  // Listen for not typing event
+	  socket.on('not typing', () => {
+		const user = getCurrentUser(socket.id);
+		socket.broadcast.to(user.room).emit('stoppedtyping', { username: user.username });
+	  });
 
 
 
@@ -55,6 +68,8 @@ io.on('connection', (socket) => {
 			.emit('message', formatMessage(user.username, msg));
 	})
 
+
+	
 
 	// Runs when client disconnects
 	socket.on('disconnect', () => {

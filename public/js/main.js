@@ -2,6 +2,7 @@ const chatForm = document.getElementById('chat-form');
 const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
+const indicator = document.getElementById('typing-indicator')
 
 //Get User from query string
 const { username, room } = Qs.parse(location.search, {
@@ -101,3 +102,25 @@ function outputUsers(users) {
 	${users.map(user => `<li>${user.username}</li>`).join('')}
 `;
 }
+
+
+const inputField = document.getElementById('msg');
+
+inputField.addEventListener('keyup', () => {
+  socket.emit('typing');
+});
+
+inputField.addEventListener('blur', () => {
+  socket.emit('not typing');
+});
+
+socket.on('istyping', function (user){
+	indicator.innerHTML = `${user.username} is typing ...`;
+	indicator.style.display = 'block';
+	console.log(user.username + ' typing');
+});
+socket.on('stoppedtyping', function (user){
+	indicator.style.display = 'none !important';
+	indicator.innerHTML = ``;
+	console.log(user.username + ' stopped typing');
+});
