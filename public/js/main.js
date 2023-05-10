@@ -3,6 +3,9 @@ const chatMessages = document.querySelector('.chat-messages');
 const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 const indicator = document.getElementById('typing-indicator')
+const inputField = document.getElementById('msg');
+
+let typingTimeout;
 
 //Get User from query string
 const { username, room } = Qs.parse(location.search, {
@@ -13,7 +16,7 @@ console.log(username, room);
 const socket = io();
 
 //join room
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom', { username: username, room: room });
 
 // Get room and username
 socket.on('roomUsers', ({ room, users }) => {
@@ -104,23 +107,30 @@ function outputUsers(users) {
 }
 
 
-const inputField = document.getElementById('msg');
-
-inputField.addEventListener('keyup', () => {
-  socket.emit('typing');
-});
-
-inputField.addEventListener('blur', () => {
-  socket.emit('not typing');
-});
+inputField.addEventListener('keydown', () => {
+	socket.emit('typing');
+  });
+  
+  inputField.addEventListener('keyup', () => {
+	socket.emit('not typing');
+  });
 
 socket.on('istyping', function (user){
+	clearTimeout(typingTimeout); // Clear any existing timeout
+	showTypingIndicator(user);
+});
+socket.on('stoppedtyping', function (user){
+	clearTimeout(typingTimeout); // Clear any existing timeout
+	typingTimeout = setTimeout(hideTypingIndicator, 1000); // Hide indicator after 1 second of inactivity
+});
+
+function showTypingIndicator(user) {
 	indicator.innerHTML = `${user.username} is typing ...`;
 	indicator.style.display = 'block';
 	console.log(user.username + ' typing');
-});
-socket.on('stoppedtyping', function (user){
+}
+
+function hideTypingIndicator() {
+	indicator.innerHTML = '';
 	indicator.style.display = 'none !important';
-	indicator.innerHTML = ``;
-	console.log(user.username + ' stopped typing');
-});
+  }
